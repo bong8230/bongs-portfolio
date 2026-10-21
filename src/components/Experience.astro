@@ -1,0 +1,31 @@
+---
+import { profile } from '../data/profile';
+---
+
+<section id="experience" class="section" aria-labelledby="experience-title">
+  <div class="container">
+    <p class="eyebrow">04 / EXPERIENCE</p>
+    <h2 id="experience-title" class="section-title">경력</h2>
+    <div class="timeline">{profile.experience.map((job, index) => <article aria-labelledby={`job-${index}`}>
+      <div class="job-meta">
+        {!job.period.trimStart().startsWith('TODO') && <p class="period">{job.period}</p>}
+        <h3 id={`job-${index}`}>{job.company}</h3>
+        <p class="position">{job.position}</p>
+      </div>
+      <div class="job-content"><p class="description">{job.description}</p>{job.achievements.length > 0 && <ul>{job.achievements.map(item => <li>{item}</li>)}</ul>}</div>
+    </article>)}</div>
+  </div>
+</section>
+
+<style>
+  .eyebrow { margin: 0 0 calc(var(--gutter) / 2); font: .75rem var(--font-mono); color: var(--accent); letter-spacing: .06em; }
+  article { display: grid; grid-template-columns: 1fr 2.5fr; gap: calc(var(--gutter) * 2); border-top: 1px solid var(--border); padding-block: calc(var(--gutter) * 2); overflow-wrap: anywhere; }
+  .job-meta, .job-content { min-width: 0; }
+  .period { margin: 0 0 calc(var(--gutter) / 2); color: var(--accent); font: .8rem/1.7 var(--font-mono); }
+  h3 { margin: 0; font-size: 1.1rem; letter-spacing: -.03em; }
+  .position { margin: calc(var(--gutter) / 4) 0 0; font-size: .85rem; color: var(--text-muted); }
+  .description { margin: 0 0 var(--gutter); font-size: .95rem; }
+  ul { margin: 0; padding-left: var(--gutter); color: var(--text-muted); font-size: .875rem; }
+  li + li { margin-top: calc(var(--gutter) / 2); }
+  @media (max-width: 600px) { article { grid-template-columns: minmax(0, 1fr); gap: var(--gutter); } }
+</style>

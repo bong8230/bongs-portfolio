@@ -1,0 +1,27 @@
+---
+import { profile } from '../data/profile';
+---
+
+<section id="contact" class="section" aria-labelledby="contact-title">
+  <div class="container">
+    <div class="contact-panel">
+      <p class="eyebrow">05 / CONTACT</p>
+      <h2 id="contact-title">함께 일할 기회를 기다립니다.</h2>
+      <p class="intro">{profile.name}에게 궁금한 점이나 제안이 있다면 연락해 주세요.</p>
+      {profile.email && <a class="email" href={`mailto:${profile.email}`}>{profile.email}<span aria-hidden="true"> ↗</span></a>}
+      {profile.links?.length > 0 && <ul>{profile.links.map(link => <li><a href={link.href} target="_blank" rel="noopener noreferrer">{link.label} <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭)</span></a></li>)}</ul>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-panel { padding: calc(var(--gutter) * 3); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow-wrap: anywhere; }
+  .eyebrow { margin: 0 0 var(--gutter); font: .75rem var(--font-mono); color: var(--accent); letter-spacing: .06em; }
+  h2 { font-size: clamp(1.5rem, 4vw, 2rem); line-height: 1.4; margin: 0; letter-spacing: -.04em; word-break: keep-all; }
+  .intro { margin: var(--gutter) 0 calc(var(--gutter) * 1.5); color: var(--text-muted); font-size: .9rem; }
+  .email { font-size: clamp(1rem, 3vw, 1.4rem); font-weight: 600; }
+  ul { padding: 0; margin: calc(var(--gutter) * 1.5) 0 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--gutter); font-size: .85rem; }
+  ul a { color: var(--text-muted); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (max-width: 600px) { .contact-panel { padding: calc(var(--gutter) * 1.5); } }
+</style>

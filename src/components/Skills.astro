@@ -1,0 +1,24 @@
+---
+import { profile } from '../data/profile';
+---
+
+<section id="skills" class="section" aria-labelledby="skills-title">
+  <div class="container">
+    <p class="eyebrow">02 / SKILLS</p>
+    <h2 id="skills-title" class="section-title">기술 스택</h2>
+    <div class="skills-grid">
+      {profile.skills.map(group => <div class="skill-group"><h3>{group.category}</h3><ul>{group.items.map(item => <li>{item}</li>)}</ul></div>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .eyebrow { margin: 0 0 calc(var(--gutter) / 2); font: .75rem var(--font-mono); color: var(--accent); letter-spacing: .06em; }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
+  .skill-group { padding: calc(var(--gutter) * 1.25); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+  h3 { font-size: .85rem; color: var(--text-muted); margin: 0 0 var(--gutter); overflow-wrap: anywhere; }
+  ul { display: flex; flex-wrap: wrap; gap: calc(var(--gutter) / 2); padding: 0; margin: 0; list-style: none; }
+  li { padding: calc(var(--gutter) / 4) calc(var(--gutter) / 2); border-radius: calc(var(--radius) / 2); background: var(--bg); border: 1px solid var(--border); font-size: .8rem; overflow-wrap: anywhere; max-width: 100%; }
+  @media (max-width: 750px) { .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 450px) { .skills-grid { grid-template-columns: minmax(0, 1fr); } }
+</style>

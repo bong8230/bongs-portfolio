@@ -1,0 +1,55 @@
+---
+import { profile } from '../data/profile';
+const projects = profile.projects.map(project => ({ ...project, visibleResults: project.results.filter(result => !result.trimStart().startsWith('TODO')) }));
+---
+
+<section id="projects" class="section" aria-labelledby="projects-title">
+  <div class="container">
+    <p class="eyebrow">03 / PROJECTS</p>
+    <h2 id="projects-title" class="section-title">주요 프로젝트</h2>
+    <div class="projects">
+      {projects.map((project, index) => <article aria-labelledby={`project-${index}`}>
+        <div class="project-heading">
+          <span class="project-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <div class="project-info">
+            <div class="meta">{!project.period.trimStart().startsWith('TODO') && <span>{project.period}</span>}<span>{project.role}</span></div>
+            <h3 id={`project-${index}`}>{project.title}</h3>
+            <p class="summary">{project.summary}</p>
+          </div>
+        </div>
+        <ul class="stack" aria-label="사용 기술">{project.stack.map(item => <li>{item}</li>)}</ul>
+        <div class="case-study">
+          <div class="case-row"><h4>문제</h4><p>{project.problem}</p></div>
+          {project.solution.length > 0 && <div class="case-row"><h4>해결</h4><ul>{project.solution.map(item => <li>{item}</li>)}</ul></div>}
+          {project.visibleResults.length > 0 && <div class="case-row result"><h4>성과</h4><ul>{project.visibleResults.map(item => <li>{item}</li>)}</ul></div>}
+        </div>
+        {project.links && project.links.length > 0 && <div class="project-links">{project.links.map(link => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label} <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭)</span></a>)}</div>}
+      </article>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .eyebrow { margin: 0 0 calc(var(--gutter) / 2); font: .75rem var(--font-mono); color: var(--accent); letter-spacing: .06em; }
+  .projects { display: grid; gap: calc(var(--gutter) * 1.5); }
+  article { min-width: 0; padding: calc(var(--gutter) * 2); border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius); overflow-wrap: anywhere; }
+  .project-heading { display: flex; gap: calc(var(--gutter) * 1.5); }
+  .project-number { color: var(--accent); font: 500 1.5rem var(--font-mono); padding-top: calc(var(--gutter) / 4); }
+  .project-info { min-width: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: calc(var(--gutter) / 2) var(--gutter); color: var(--text-muted); font-size: .75rem; }
+  h3 { margin: calc(var(--gutter) / 4) 0 calc(var(--gutter) / 2); font-size: clamp(1.1rem, 3vw, 1.4rem); line-height: 1.5; letter-spacing: -.035em; }
+  .summary { margin: 0; color: var(--text-muted); font-size: .9rem; }
+  .stack { display: flex; flex-wrap: wrap; gap: calc(var(--gutter) / 2); list-style: none; padding: 0; margin: calc(var(--gutter) * 1.5) 0; }
+  .stack li { max-width: 100%; padding: calc(var(--gutter) / 4) calc(var(--gutter) * .625); background: var(--accent-soft); color: var(--accent); border-radius: calc(var(--radius) / 2); font: .75rem/1.6 var(--font-mono); }
+  .case-study { border-top: 1px solid var(--border); padding-top: calc(var(--gutter) * 1.25); display: grid; gap: var(--gutter); }
+  .case-row { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: var(--gutter); font-size: .875rem; }
+  h4 { margin: 0; font-size: .8rem; color: var(--text-muted); }
+  .case-row p, .case-row ul { margin: 0; }
+  .case-row ul { padding-left: var(--gutter); }
+  .case-row li + li { margin-top: calc(var(--gutter) / 4); }
+  .result { padding: var(--gutter); background: var(--accent-soft); border-radius: calc(var(--radius) / 2); }
+  .result h4 { color: var(--accent); }
+  .project-links { display: flex; flex-wrap: wrap; gap: var(--gutter); margin-top: var(--gutter); font-size: .85rem; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (max-width: 600px) { article { padding: calc(var(--gutter) * 1.25); } .project-heading { gap: var(--gutter); } .case-row { grid-template-columns: minmax(0, 1fr); gap: calc(var(--gutter) / 4); } }
+</style>

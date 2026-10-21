@@ -1,0 +1,55 @@
+---
+import { profile } from '../data/profile';
+const sections = [ ['about', '소개'], ['skills', '기술'], ['projects', '프로젝트'], ['experience', '경력'], ['contact', '연락'] ];
+---
+
+<header>
+  <div class="container header-inner">
+    <a class="brand" href="#" aria-label={`${profile.name} 페이지 처음으로`}>{profile.name}<span aria-hidden="true">.</span></a>
+    <nav aria-label="주요 메뉴">
+      {sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+    </nav>
+    <button id="theme-toggle" type="button" aria-label="다크 모드" aria-pressed="false" hidden>
+      <span class="theme-icon" aria-hidden="true">◐</span><span class="theme-label">다크 모드</span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('#theme-toggle');
+  if (button) {
+    const sync = () => {
+      const dark = document.documentElement.dataset.theme === 'dark';
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? '라이트 모드로 전환' : '다크 모드로 전환');
+      const label = button.querySelector('.theme-label');
+      if (label) label.textContent = dark ? '라이트 모드' : '다크 모드';
+    };
+    sync();
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = theme;
+      try { localStorage.setItem('theme', theme); } catch {}
+      sync();
+    });
+  }
+</script>
+
+<style>
+  header { border-bottom: 1px solid var(--border); }
+  .header-inner { display: flex; align-items: center; flex-wrap: wrap; gap: var(--gutter); padding-block: var(--gutter); }
+  .brand { color: var(--text); font-size: 1.2rem; font-weight: 800; letter-spacing: -.04em; overflow-wrap: anywhere; }
+  .brand span { color: var(--accent); }
+  nav { display: flex; flex-wrap: wrap; gap: var(--gutter); margin-left: auto; }
+  nav a { font-size: .875rem; color: var(--text-muted); }
+  nav a:hover { color: var(--accent); }
+  button { display: inline-flex; align-items: center; gap: calc(var(--gutter) / 2); padding: calc(var(--gutter) / 2) calc(var(--gutter) * .75); border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); font: inherit; font-size: .8rem; cursor: pointer; }
+  button[hidden] { display: none; }
+  .theme-icon { font-size: 1.1rem; line-height: 1; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  @media (max-width: 600px) {
+    button { margin-left: auto; }
+    nav { order: 3; width: 100%; margin: 0; justify-content: space-between; gap: calc(var(--gutter) / 2); }
+  }
+</style>
