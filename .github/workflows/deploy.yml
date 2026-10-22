@@ -1,10 +1,9 @@
 name: Deploy to GitHub Pages
 
-# 배포 보류 중이라 수동 실행만 허용한다. 저장소를 public으로 바꾸고 Pages를 켠 뒤
-# 아래 push 트리거 주석을 풀면 main에 push할 때마다 자동 배포된다.
+# main 브랜치 변경 시 GitHub Pages에 자동 배포한다.
 on:
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:

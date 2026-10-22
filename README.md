@@ -33,12 +33,8 @@ src/
 
 ## 배포
 
-현재는 비공개 저장소라 배포를 보류했습니다. GitHub Pages 무료 배포는 공개 저장소에서만 가능합니다.
+공개 저장소와 GitHub Actions를 통해 [포트폴리오](https://bong8230.github.io/bongs-portfolio/)를 배포합니다.
 
-배포하려면:
-1. 저장소를 public으로 전환합니다: `gh repo edit bong8230/bongs-portfolio --visibility public --accept-visibility-change-consequences`
-2. Settings → Pages → Source를 **GitHub Actions**로 설정합니다.
-3. `.github/workflows/deploy.yml`의 `push` 트리거 주석을 풉니다. 이후 `main`에 push하면 `https://bong8230.github.io/bongs-portfolio/`에 자동 배포됩니다.
+Pages 소스는 **GitHub Actions**입니다. `.github/workflows/deploy.yml`에서 `main` 브랜치에 push할 때마다 빌드·배포하며, Actions 탭에서 수동으로 실행할 수도 있습니다.
 
-비공개 저장소를 유지하려면 [Vercel](https://vercel.com)에 GitHub로 로그인한 뒤 이 저장소를 import해도 됩니다. 이 경우 `astro.config.mjs`의 `base`를 지웁니다.
 개인 도메인을 연결할 때는 `astro.config.mjs`의 `site`를 해당 도메인으로 바꾸고 `base`를 지웁니다.
