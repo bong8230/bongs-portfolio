@@ -19,6 +19,8 @@ npm run preview  # 빌드 결과 미리보기
 
 - 공개 사이트이므로 전화번호, 주소, 생년월일은 넣지 않습니다.
 - `projects[].period`, `projects[].results`에서 `TODO`로 시작하는 값은 화면에 표시되지 않습니다. 실제 값으로 바꾸면 그대로 반영됩니다.
+- 각 프로젝트의 `slug`는 상세 페이지 주소에 사용하며 서로 달라야 합니다. `detail.flow`는 흐름도의 단계, `detail.decisions`는 구현의 핵심 요약입니다. 기존 프로젝트 사실만 재구성합니다.
+- 공개 샘플 저장소가 준비되면 `repo: { label: '저장소 이름', href: '공개 저장소 URL' }`를 설정합니다. `repo`가 없으면 코드 보기 버튼을 표시하지 않습니다.
 
 ## 구조
 
@@ -29,6 +31,7 @@ src/
   layouts/BaseLayout.astro
   components/             # 섹션별 컴포넌트
   pages/index.astro       # 섹션 조합
+  pages/projects/[slug].astro # 프로젝트 상세 페이지
 ```
 
 ## 배포

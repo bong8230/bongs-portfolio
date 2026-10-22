@@ -1,0 +1,109 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { profile, type Project } from '../../data/profile';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export const getStaticPaths = (() => profile.projects.map(project => ({
+  params: { slug: project.slug }, props: { project },
+}))) satisfies GetStaticPaths;
+
+interface Props { project: Project }
+const { project } = Astro.props;
+const home = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const visible = (value: string) => value.trim() && !value.trimStart().startsWith('TODO');
+const results = project.results.filter(visible);
+const solution = project.solution.filter(visible);
+const flow = project.detail?.flow.filter(visible) ?? [];
+const decisions = project.detail?.decisions?.filter(visible) ?? [];
+const boxWidth = 208;
+const stepWidth = 240;
+const diagramWidth = Math.max(1, flow.length) * stepWidth - 32;
+---
+
+<BaseLayout title={`${project.title} | ${profile.name}`} description={project.summary}>
+  <Header />
+  <main class="container project-detail">
+    <a class="back-link" href={`${home}#projects`}><span aria-hidden="true">←</span> 주요 프로젝트로</a>
+    <article>
+      <header class="overview">
+        <p class="eyebrow">PROJECT DETAIL</p>
+        <h1>{project.title}</h1>
+        <p class="summary">{project.summary}</p>
+        <dl>
+          {visible(project.period) && <div><dt>기간</dt><dd>{project.period}</dd></div>}
+          {visible(project.role) && <div><dt>역할</dt><dd>{project.role}</dd></div>}
+          {project.stack.length > 0 && <div><dt>기술</dt><dd><ul class="stack">{project.stack.map(item => <li>{item}</li>)}</ul></dd></div>}
+        </dl>
+        {project.repo?.href && <a class="code-link" href={project.repo.href} target="_blank" rel="noopener noreferrer">코드 보기 <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭)</span></a>}
+      </header>
+
+      {flow.length > 0 && <section class="detail-section" aria-labelledby="flow-title">
+        <h2 id="flow-title">처리 흐름</h2>
+        <figure>
+          <svg class="flow-horizontal" viewBox={`0 0 ${diagramWidth} 96`} aria-hidden="true">
+            {flow.map((step, index) => <g transform={`translate(${index * stepWidth}, 0)`}>
+              <rect x="1" y="1" width={boxWidth - 2} height="94" rx="12" />
+              <text class="step-number" x={boxWidth / 2} y="32" text-anchor="middle">{String(index + 1).padStart(2, '0')}</text>
+              <text x={boxWidth / 2} y="63" text-anchor="middle">{step}</text>
+              {index < flow.length - 1 && <path d="M214 48 H232 M226 42 L232 48 L226 54" />}
+            </g>)}
+          </svg>
+          <svg class="flow-vertical" viewBox={`0 0 320 ${flow.length * 112 - 24}`} aria-hidden="true">
+            {flow.map((step, index) => <g transform={`translate(0, ${index * 112})`}>
+              <rect x="1" y="1" width="318" height="86" rx="12" />
+              <text class="step-number" x="160" y="31" text-anchor="middle">{String(index + 1).padStart(2, '0')}</text>
+              <text x="160" y="59" text-anchor="middle">{step}</text>
+              {index < flow.length - 1 && <path d="M160 92 V106 M154 100 L160 106 L166 100" />}
+            </g>)}
+          </svg>
+          <figcaption class="sr-only"><ol>{flow.map(step => <li>{step}</li>)}</ol></figcaption>
+        </figure>
+      </section>}
+
+      {visible(project.problem) && <section class="detail-section" aria-labelledby="problem-title"><h2 id="problem-title">문제</h2><p>{project.problem}</p></section>}
+      {solution.length > 0 && <section class="detail-section" aria-labelledby="solution-title">
+        <h2 id="solution-title">해결</h2><ul class="prose-list">{solution.map(item => <li>{item}</li>)}</ul>
+        {decisions.length > 0 && <aside class="decisions" aria-labelledby="decisions-title"><h3 id="decisions-title">구현의 핵심</h3><ul class="prose-list">{decisions.map(item => <li>{item}</li>)}</ul></aside>}
+      </section>}
+      {results.length > 0 && <section class="detail-section" aria-labelledby="results-title"><h2 id="results-title">성과</h2><ul class="prose-list">{results.map(item => <li>{item}</li>)}</ul></section>}
+    </article>
+    <a class="return-link" href={`${home}#projects`}><span aria-hidden="true">←</span> 메인으로 돌아가기</a>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .project-detail { padding-block: calc(var(--section-gap) / 2); overflow-wrap: anywhere; }
+  .back-link { display: inline-block; margin-bottom: calc(var(--gutter) * 2); color: var(--text-muted); font-size: .85rem; }
+  .eyebrow { margin: 0 0 var(--gutter); color: var(--accent); font: 700 .75rem var(--font-sans); letter-spacing: .06em; }
+  h1 { margin: 0; font-size: clamp(1.8rem, 4.5vw, 3rem); line-height: 1.35; letter-spacing: -.045em; word-break: keep-all; }
+  .summary { margin: calc(var(--gutter) * 1.5) 0; color: var(--text-muted); font-size: 1.05rem; }
+  dl { margin: calc(var(--gutter) * 2) 0 0; display: grid; gap: var(--gutter); }
+  dl > div { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: var(--gutter); }
+  dt { color: var(--text-muted); font-size: .85rem; }
+  dd { margin: 0; font-size: .9rem; }
+  .stack { display: flex; flex-wrap: wrap; gap: calc(var(--gutter) / 2); list-style: none; padding: 0; margin: 0; }
+  .stack li { max-width: 100%; padding: calc(var(--gutter) / 4) calc(var(--gutter) / 2); border-radius: calc(var(--radius) / 2); color: var(--accent); background: var(--accent-soft); font: .75rem/1.6 var(--font-mono); }
+  .code-link { display: inline-block; margin-top: calc(var(--gutter) * 1.5); padding: calc(var(--gutter) / 2) var(--gutter); border: 1px solid var(--border); border-radius: var(--radius); font-size: .9rem; font-weight: 600; }
+  .detail-section { margin-top: calc(var(--gutter) * 3); padding-top: calc(var(--gutter) * 2); border-top: 1px solid var(--border); }
+  h2 { margin: 0 0 calc(var(--gutter) * 1.5); font-size: 1.4rem; letter-spacing: -.03em; }
+  p { margin: 0; }
+  figure { margin: 0; }
+  svg { width: 100%; height: auto; display: block; }
+  svg rect { fill: var(--surface); stroke: var(--border); stroke-width: 2; }
+  svg text { fill: var(--text); font: 600 16px var(--font-sans); }
+  svg .step-number { fill: var(--accent); font-size: 13px; font-weight: 800; }
+  svg path { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .flow-vertical { display: none; }
+  .prose-list { padding-left: calc(var(--gutter) * 1.25); margin: 0; }
+  .prose-list li + li { margin-top: calc(var(--gutter) * .75); }
+  .prose-list li::marker { color: var(--accent); }
+  .decisions { padding: calc(var(--gutter) * 1.5); margin-top: calc(var(--gutter) * 1.5); background: var(--accent-soft); border-radius: var(--radius); font-size: .9rem; }
+  h3 { margin: 0 0 var(--gutter); color: var(--accent); font-size: .9rem; }
+  .return-link { display: inline-block; margin-top: calc(var(--gutter) * 3); padding: calc(var(--gutter) * .75) var(--gutter); border: 1px solid var(--border); border-radius: var(--radius); font-size: .9rem; font-weight: 600; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (max-width: 767px) { .flow-horizontal { display: none; } .flow-vertical { display: block; max-width: 24rem; margin-inline: auto; } }
+</style>

@@ -8,7 +8,7 @@ import { profile } from '../data/profile';
     <h1 id="hero-title">안녕하세요,<br /><span>{profile.name}</span>입니다.</h1>
     <p class="tagline">{profile.tagline}</p>
     <div class="actions">
-      <a class="primary" href="#projects">프로젝트 보기 <span aria-hidden="true">↗</span></a>
+      <a class="primary" href="#projects">주요 프로젝트 <span aria-hidden="true">↓</span></a>
       <a class="secondary" href="#contact">연락하기 <span aria-hidden="true">→</span></a>
     </div>
     {profile.links?.length > 0 && <div class="links">{profile.links.map(link => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label} <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭)</span></a>)}</div>}
