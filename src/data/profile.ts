@@ -83,7 +83,6 @@ export const profile: Profile = {
   projects: [
     {
       slug: 'external-data-intake',
-      repo: { label: 'GitHub', href: 'https://github.com/bong8230/fixed-length-ingest' },
       title: '대외계 전문 데이터 수신·검증·적재',
       period: '2022.09 – 현재 · 상시 운영 및 추가 개발',
       role: '설계 · 개발 · 운영',
