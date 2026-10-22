@@ -1,6 +1,6 @@
 # bongs-portfolio
 
-백엔드 개발자 성봉제의 포트폴리오 사이트입니다. [Astro](https://astro.build)로 만든 정적 사이트이며, GitHub Pages로 배포합니다.
+백엔드 개발자 성봉제의 포트폴리오 사이트입니다. [Astro](https://astro.build)로 만든 정적 사이트입니다. 현재 개인정보·회사정보 검토를 위해 비공개로 관리하며 배포를 보류합니다.
 
 ## 실행
 
@@ -36,8 +36,8 @@ src/
 
 ## 배포
 
-공개 저장소와 GitHub Actions를 통해 [포트폴리오](https://bong8230.github.io/bongs-portfolio/)를 배포합니다.
+현재 저장소는 비공개이며 GitHub Pages 배포를 보류했습니다. 로컬에서는 위 실행 명령으로 확인할 수 있습니다.
 
-Pages 소스는 **GitHub Actions**입니다. `.github/workflows/deploy.yml`에서 `main` 브랜치에 push할 때마다 빌드·배포하며, Actions 탭에서 수동으로 실행할 수도 있습니다.
+`.github/workflows/deploy.yml`의 push 자동 실행은 꺼두었습니다. 공개 및 배포 재개 승인 후 Pages 소스를 **GitHub Actions**로 설정하고 `main` 브랜치의 push 트리거를 복구합니다. 예정 주소는 `https://bong8230.github.io/bongs-portfolio/`입니다.
 
 개인 도메인을 연결할 때는 `astro.config.mjs`의 `site`를 해당 도메인으로 바꾸고 `base`를 지웁니다.

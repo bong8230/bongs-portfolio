@@ -83,6 +83,7 @@ export const profile: Profile = {
   projects: [
     {
       slug: 'external-data-intake',
+      repo: { label: 'GitHub', href: 'https://github.com/bong8230/fixed-length-ingest' },
       title: '대외계 전문 데이터 수신·검증·적재',
       period: '2022.09 – 현재 · 상시 운영 및 추가 개발',
       role: '설계 · 개발 · 운영',
@@ -108,6 +109,7 @@ export const profile: Profile = {
     },
     {
       slug: 'spring-batch-automation',
+      repo: { label: 'GitHub', href: 'https://github.com/bong8230/spring-batch-precheck' },
       title: 'Pro*C 수동 처리 → Spring Batch 자동화',
       period: '2026.07 – 2026.08',
       role: '배치 설계 · 개발',
@@ -158,6 +160,7 @@ export const profile: Profile = {
     },
     {
       slug: 'safe-production-deploy',
+      repo: { label: 'GitHub', href: 'https://github.com/bong8230/safe-deploy-sh' },
       title: 'Git 형상관리 · 운영 배포 스크립트',
       period: '2026.01 – 현재',
       role: '형상관리 · 배포 스크립트 설계/개발',

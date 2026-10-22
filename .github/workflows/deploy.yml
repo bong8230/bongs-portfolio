@@ -1,9 +1,8 @@
 name: Deploy to GitHub Pages
 
-# main 브랜치 변경 시 GitHub Pages에 자동 배포한다.
+# 개인정보·회사정보 검토 중에는 자동 배포를 보류한다.
+# 공개 및 배포 재개 승인 후 push 트리거를 복구한다.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
