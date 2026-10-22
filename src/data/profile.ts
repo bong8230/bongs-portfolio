@@ -69,7 +69,7 @@ export const profile: Profile = {
   links: [{ label: 'GitHub', href: 'https://github.com/bong8230' }],
   skills: [
     { category: 'Language', items: ['Java', 'SQL', 'PL/SQL', 'JavaScript', 'VB.NET', 'JSP'] },
-    { category: 'Framework', items: ['Spring Framework', 'MyBatis', 'iBatis', 'Nexacro', 'Node.js', 'jQuery'] },
+    { category: 'Framework', items: ['Spring Boot 3', 'Spring Framework', 'Spring Batch', 'MyBatis', 'iBatis', 'Nexacro', 'Node.js', 'jQuery'] },
     { category: 'Database', items: ['Oracle', 'MySQL', 'SQL 튜닝'] },
     { category: 'Batch / 연계', items: ['FEP', 'EAI', 'JobPass', 'Oracle Scheduler', 'Pro*C'] },
     { category: 'WAS / Server', items: ['Apache Tomcat', 'JEUS', 'IIS', 'Linux'] },
@@ -78,10 +78,10 @@ export const profile: Profile = {
   projects: [
     {
       title: '대외계 전문 데이터 수신·검증·적재',
-      period: 'TODO 기간',
+      period: '2022.09 – 현재 · 상시 운영 및 추가 개발',
       role: '설계 · 개발 · 운영',
-      summary: '외부 기관에서 FEP를 거쳐 들어오는 전문과 파일을 검증해 업무 마스터 데이터로 반영하는 대외계 처리 흐름입니다.',
-      stack: ['Java', 'Spring', 'Oracle', 'PL/SQL', 'FEP'],
+      summary: '외부 기관에서 FEP를 거쳐 들어오는 전문과 파일을 검증해 업무 마스터 데이터로 반영하는 대외계 처리 흐름입니다. 차세대 이후 Spring Boot 3 / Java 17 기반 대외계에서 기능 개발과 운영을 이어가고 있습니다.',
+      stack: ['Java 17', 'Spring Boot 3', 'MyBatis', 'Oracle', 'PL/SQL', 'FEP'],
       problem:
         '외부 기관과 주고받는 전문 데이터에 누락, 중복, 형식 오류가 섞여 들어와도 업무 데이터에는 정확하게 반영되어야 했고, 장애가 나면 어디서 끊겼는지 빠르게 찾아야 했습니다.',
       solution: [
@@ -90,11 +90,31 @@ export const profile: Profile = {
         '운영자가 직접 조회하고 재처리할 수 있는 화면과 백엔드 로직, PL/SQL을 구현했습니다.',
         '처리 로그와 흐름을 기준으로 장애 원인과 누락 지점을 추적하고, 송수신 스케줄 관리와 모니터링을 맡았습니다.',
       ],
-      results: [],
+      results: [
+        '전문 데이터 처리 흐름을 구조화해 장애 지점을 더 빠르게 파악할 수 있게 했습니다.',
+        '적재 누락, 중복, 검증 오류 대응 체계를 정리해 운영 안정성을 높였습니다.',
+        '운영자가 직접 조회하고 재처리할 수 있는 구조를 마련해 업무 효율을 개선했습니다.',
+      ],
+    },
+    {
+      title: 'Pro*C 수동 처리 → Spring Batch 자동화',
+      period: '2026.08',
+      role: '배치 설계 · 개발',
+      summary:
+        '수동으로 돌리던 Pro*C 기반 파일 처리를 Spring Batch로 다시 만들고 배치 솔루션과 연계해 자동화했습니다.',
+      stack: ['Java', 'Spring Batch', 'MyBatis', 'Oracle', 'JobPass'],
+      problem:
+        '대량 데이터 적재·가공과 외부 연계 파일 생성·처리를 Pro*C 프로그램으로 사람이 직접 실행하고 있어, 누락·실행 순서 실수와 실패 시 재처리 부담이 컸습니다.',
+      solution: [
+        '파일 처리 업무를 Spring Batch Job/Step으로 재구성해 대량 데이터 적재·가공과 연계 파일 생성·처리를 구현했습니다.',
+        '배치 솔루션(JobPass)과 연계해 실행 스케줄과 Job 간 선후행 순서를 관리하도록 했습니다.',
+        '실패한 지점부터 재시작하고 재처리할 수 있도록 배치 구조를 설계했습니다.',
+      ],
+      results: ['수동으로 처리하던 상당수의 파일 처리 업무를 자동화했습니다.'],
     },
     {
       title: '차세대(고도화) 시스템 전환',
-      period: 'TODO 기간',
+      period: '2025.06 – 2025.12',
       role: '고객사 담당자 · 화면/배치 개발',
       summary: 'VB.NET 기반 채권관리시스템을 Nexacro + Spring 구조로 전환한 차세대 프로젝트입니다.',
       stack: ['Spring', 'Nexacro', 'Oracle', 'VB.NET'],
@@ -106,7 +126,11 @@ export const profile: Profile = {
         'FEP를 통해 WAS로 전달되는 전문 파일의 수신·검증·파싱 배치 로직을 직접 작성했습니다.',
         '소스 인수인계 이후 기능 점검, 오류 대응, 안정화를 맡았고 전환 후에도 Nexacro·Spring 구조에 맞춰 운영 개발을 이어갔습니다.',
       ],
-      results: [],
+      results: [
+        '전환 이후 안정화 단계까지 끊김 없이 운영을 지원했습니다.',
+        '고객사 관점과 개발 관점을 함께 이해하며 수행사와의 협업 효율을 높였습니다.',
+        '인수인계 이후 내부 운영 대응력을 높이는 데 기여했습니다.',
+      ],
     },
     {
       title: '배치 시스템 운영 및 JobPass 전환',
@@ -120,7 +144,11 @@ export const profile: Profile = {
         'JobPass 환경에 맞게 배치 구조를 변환하고 일부 배치 로직은 직접 수정·신규 개발했습니다.',
         '배치 실패 시 로그 확인, 데이터 점검, 재실행과 후속 조치를 수행하고 장애 대응 기준을 정리했습니다.',
       ],
-      results: [],
+      results: [
+        '배치 장애 발생 시 원인 분석과 재처리 대응 속도를 높였습니다.',
+        '기존 구조와 전환 구조를 모두 이해해 운영 공백 없이 대응했습니다.',
+        '배치 운영 기준을 정리해 관리 효율을 개선했습니다.',
+      ],
     },
     {
       title: 'Git 형상관리 · 배포 자동화',
@@ -134,20 +162,11 @@ export const profile: Profile = {
         '변경 파일 선별 배포, 백업 생성, 로그 기록, 롤백 절차를 포함한 배포 자동화 스크립트를 설계·구현했습니다.',
         '운영 반영 중 오류가 나면 백업 파일과 로그를 기반으로 빠르게 복구했습니다.',
       ],
-      results: [],
-    },
-    {
-      title: '회사 홈페이지 전환 (ASP → JSP)',
-      period: 'TODO 기간',
-      role: '개발 · 테스트 · 운영 지원',
-      summary: 'IIS·ASP 기반 회사 홈페이지를 Tomcat·JSP 구조로 전환하는 작업에 참여했습니다.',
-      stack: ['JSP', 'Apache Tomcat', 'ASP', 'IIS'],
-      problem: '운영 환경을 IIS·ASP에서 Tomcat·JSP로 바꾸는 동안 서비스가 끊기지 않아야 했습니다.',
-      solution: [
-        '일부 기능 개발과 테스트를 수행하고 운영 반영 과정을 지원했습니다.',
-        '전환 이후 기본 운영과 유지보수를 맡았습니다.',
+      results: [
+        '소스 변경 이력의 추적성을 확보했습니다.',
+        '수동 배포 과정의 운영 리스크를 줄였습니다.',
+        '배포 오류 시 백업 기반으로 빠르게 복구할 수 있어 운영 안정성이 높아졌습니다.',
       ],
-      results: [],
     },
   ],
   experience: [
@@ -160,9 +179,10 @@ export const profile: Profile = {
         'VB.NET, Oracle, JavaScript 기반 채권관리시스템 신규 기능 개발과 유지보수, 차세대 전환 후 Nexacro·Spring 운영 개발',
         '운영 장애를 로그와 데이터 기준으로 분석해 원인 파악 후 조치, 조회 화면·UI 개선과 SQL 튜닝',
         '외주가 맡던 대외계 솔루션의 반복 오류를 직접 분석·수정해 외주 의존도와 업무 지연을 줄임',
-        'Spring 기반 대외계 시스템 운영, FEP 전문 데이터 검증·적재와 조회·재처리 화면 개발',
+        'Spring Boot 3 / Java 17 기반 대외계 시스템 운영·기능 개발, FEP 전문 데이터 검증·적재와 조회·재처리 화면 개발',
+        '수동 Pro*C 파일 처리를 Spring Batch + 배치 솔루션 연계로 자동화',
         '업무 데이터 추출·분석용 SQL 작성과 반복 업무 자동화 쿼리 스크립트 개발',
-        '차세대 전환 프로젝트 참여, JobPass 배치 전환, Git 형상관리·배포 자동화, 홈페이지 ASP → JSP 전환',
+        '차세대 전환 프로젝트 참여, JobPass 배치 전환, Git 형상관리·배포 자동화',
       ],
     },
     {
