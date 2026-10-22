@@ -4,6 +4,8 @@ import { profile, type Project } from '../../data/profile';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import { Code } from 'astro:components';
+import { codeSamples } from '../../data/codeSamples';
 
 export const getStaticPaths = (() => profile.projects.map(project => ({
   params: { slug: project.slug }, props: { project },
@@ -17,6 +19,7 @@ const results = project.results.filter(visible);
 const solution = project.solution.filter(visible);
 const flow = project.detail?.flow.filter(visible) ?? [];
 const decisions = project.detail?.decisions?.filter(visible) ?? [];
+const samples = codeSamples[project.slug] ?? [];
 const boxWidth = 208;
 const stepWidth = 240;
 const diagramWidth = Math.max(1, flow.length) * stepWidth - 32;
@@ -70,6 +73,15 @@ const diagramWidth = Math.max(1, flow.length) * stepWidth - 32;
         <h2 id="solution-title">해결</h2><ul class="prose-list">{solution.map(item => <li>{item}</li>)}</ul>
         {decisions.length > 0 && <aside class="decisions" aria-labelledby="decisions-title"><h3 id="decisions-title">구현의 핵심</h3><ul class="prose-list">{decisions.map(item => <li>{item}</li>)}</ul></aside>}
       </section>}
+      {samples.length > 0 && <section class="detail-section" aria-labelledby="code-title">
+        <h2 id="code-title">핵심 코드</h2>
+        <p class="code-note">실제 작성한 코드에서 발췌했습니다. 클래스명, 파일 코드, 테이블, 서버 정보 같은 회사 식별값은 일반 이름으로 바꿨고 로직은 그대로 두었습니다.</p>
+        {samples.map(sample => <div class="code-sample">
+          <h3>{sample.title}</h3>
+          {sample.description.map(line => <p>{line}</p>)}
+          <Code code={sample.code} lang={sample.lang === 'text' ? 'plaintext' : sample.lang} themes={{ light: 'github-light', dark: 'github-dark' }} />
+        </div>)}
+      </section>}
       {results.length > 0 && <section class="detail-section" aria-labelledby="results-title"><h2 id="results-title">성과</h2><ul class="prose-list">{results.map(item => <li>{item}</li>)}</ul></section>}
     </article>
     <a class="return-link" href={`${home}#projects`}><span aria-hidden="true">←</span> 메인으로 돌아가기</a>
@@ -108,6 +120,13 @@ const diagramWidth = Math.max(1, flow.length) * stepWidth - 32;
   h3 { margin: 0 0 var(--gutter); color: var(--accent); font-size: .9rem; }
   .return-link { display: inline-block; margin-top: calc(var(--gutter) * 3); padding: calc(var(--gutter) * .75) var(--gutter); border: 1px solid var(--border); border-radius: var(--radius); font-size: .9rem; font-weight: 600; }
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .code-note { color: var(--text-muted); font-size: .85rem; }
+  .code-sample { margin-top: calc(var(--gutter) * 2); }
+  .code-sample h3 { color: var(--text); font-size: 1rem; }
+  .code-sample p { margin: 0 0 calc(var(--gutter) / 2); font-size: .9rem; }
+  .code-sample :global(pre) { margin: var(--gutter) 0 0; padding: var(--gutter); border: 1px solid var(--border); border-radius: var(--radius); font: .8rem/1.6 var(--font-mono); overflow-x: auto; max-width: 100%; overflow-wrap: normal; }
+  :global(:root[data-theme='dark']) .code-sample :global(.astro-code),
+  :global(:root[data-theme='dark']) .code-sample :global(.astro-code span) { color: var(--shiki-dark) !important; background-color: var(--shiki-dark-bg) !important; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   @media (max-width: 767px) { .flow-horizontal { display: none; } .flow-vertical { display: block; max-width: 24rem; margin-inline: auto; } }
 </style>
