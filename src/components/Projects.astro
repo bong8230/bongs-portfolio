@@ -25,9 +25,7 @@ const home = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
           {project.visibleResults.length > 0 && <div class="case-row result"><h4>성과</h4><ul>{project.visibleResults.map(item => <li>{item}</li>)}</ul></div>}
         </div>
         <div class="project-actions">
-          <a class="detail-link" href={`${home}projects/${project.slug}/`} aria-label={`${project.title} 자세히 보기`}>자세히 보기 <span aria-hidden="true">→</span></a>
-          {project.repo?.href && <a href={project.repo.href} target="_blank" rel="noopener noreferrer">코드 보기 <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭)</span></a>}
-        </div>
+          <a class="detail-link" href={`${home}projects/${project.slug}/`} aria-label={`${project.title} 자세히 보기`}>자세히 보기 <span aria-hidden="true">→</span></a>        </div>
         {project.links && project.links.length > 0 && <div class="project-links">{project.links.map(link => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label} <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭)</span></a>)}</div>}
       </article>)}
     </div>

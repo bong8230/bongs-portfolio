@@ -127,6 +127,7 @@ export const profile: Profile = {
         '약 20년간 수작업으로 돌리던 Pro*C 업무 19종을 Spring Batch Job 19개로 신규 개발해 스케줄 기반으로 자동화했습니다.',
         '외부 수신 파일 26종과 연계된 후처리를 선행 검증 후 자동 실행하도록 바꿔 실행 누락과 순서 실수 위험을 줄였습니다.',
       ],
+      repo: { label: 'GitHub spring-batch-precheck', href: 'https://github.com/bong8230/spring-batch-precheck' },
       detail: {
         flow: ['JobPass 스케줄', '선행 파일 적재 검증', 'Tasklet Job 실행', '프로시저·SQL 처리'],
         decisions: ['선행 수신 파일 26종의 적재 여부를 확인하고 미적재 시 즉시 실패하도록 했습니다.', '기준 일자와 프로시저 오류 코드를 검증하고 실패 원인을 Job 결과 메시지에 남겼습니다.'],
@@ -180,6 +181,7 @@ export const profile: Profile = {
         '배포 전 백업을 남겨 문제가 생기면 이전 파일로 빠르게 복구할 수 있도록 했습니다.',
         '배포 이력이 로그로 남아 소스 변경 이력과 함께 추적할 수 있게 되었습니다.',
       ],
+      repo: { label: 'GitHub safe-deploy-sh', href: 'https://github.com/bong8230/safe-deploy-sh' },
       detail: {
         flow: ['변경·삭제 후보 확인', '대상 선택·안전 확인', '기존 파일 백업·검증', '순차 운영 반영'],
         decisions: ['rsync dry-run을 활용해 변경·삭제 후보를 확인하고 선택 배포와 전체 동기화를 구분했습니다.', '백업 검증 실패 시 배포를 중단하고, 운영 서버 한 대에서 확인한 뒤 다른 서버에 반영했습니다.'],

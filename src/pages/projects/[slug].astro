@@ -39,10 +39,6 @@ const diagramWidth = Math.max(1, flow.length) * stepWidth - 32;
           {visible(project.role) && <div><dt>역할</dt><dd>{project.role}</dd></div>}
           {project.stack.length > 0 && <div><dt>기술</dt><dd><ul class="stack">{project.stack.map(item => <li>{item}</li>)}</ul></dd></div>}
         </dl>
-        {project.repo?.href && <div class="repo">
-          <a class="code-link" href={project.repo.href} target="_blank" rel="noopener noreferrer" aria-label={`${project.repo.label}에서 코드 보기 (새 탭)`}>코드 보기 <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭)</span></a>
-          <p class="repo-note">회사 코드가 아닌, 같은 설계를 가상 데이터로 새로 구현한 공개용 예제입니다.</p>
-        </div>}
       </header>
 
       {flow.length > 0 && <section class="detail-section" aria-labelledby="flow-title">
@@ -83,6 +79,7 @@ const diagramWidth = Math.max(1, flow.length) * stepWidth - 32;
         </div>)}
       </section>}
       {results.length > 0 && <section class="detail-section" aria-labelledby="results-title"><h2 id="results-title">성과</h2><ul class="prose-list">{results.map(item => <li>{item}</li>)}</ul></section>}
+      {project.repo?.href && <p class="repo-note">같은 설계를 가상 데이터로 새로 구현한 공개 예제: <a href={project.repo.href} target="_blank" rel="noopener noreferrer">{project.repo.label} <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭)</span></a></p>}
     </article>
     <a class="return-link" href={`${home}#projects`}><span aria-hidden="true">←</span> 메인으로 돌아가기</a>
   </main>
@@ -101,8 +98,7 @@ const diagramWidth = Math.max(1, flow.length) * stepWidth - 32;
   dd { margin: 0; font-size: .9rem; }
   .stack { display: flex; flex-wrap: wrap; gap: calc(var(--gutter) / 2); list-style: none; padding: 0; margin: 0; }
   .stack li { max-width: 100%; padding: calc(var(--gutter) / 4) calc(var(--gutter) / 2); border-radius: calc(var(--radius) / 2); color: var(--accent); background: var(--accent-soft); font: .75rem/1.6 var(--font-mono); }
-  .code-link { display: inline-block; margin-top: calc(var(--gutter) * 1.5); padding: calc(var(--gutter) / 2) var(--gutter); border: 1px solid var(--border); border-radius: var(--radius); font-size: .9rem; font-weight: 600; }
-  .repo-note { margin-top: calc(var(--gutter) / 2); color: var(--text-muted); font-size: .8rem; }
+  .repo-note { margin-top: calc(var(--gutter) * 3); color: var(--text-muted); font-size: .8rem; }
   .detail-section { margin-top: calc(var(--gutter) * 3); padding-top: calc(var(--gutter) * 2); border-top: 1px solid var(--border); }
   h2 { margin: 0 0 calc(var(--gutter) * 1.5); font-size: 1.4rem; letter-spacing: -.03em; }
   p { margin: 0; }
